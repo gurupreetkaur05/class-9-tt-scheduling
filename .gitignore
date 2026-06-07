@@ -1,0 +1,5 @@
+timetable.db
+.streamlit/secrets.toml
+__pycache__/
+*.pyc
+.playwright-mcp/
