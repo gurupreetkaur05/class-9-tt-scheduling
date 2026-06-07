@@ -29,14 +29,10 @@ with st.sidebar:
 
     st.divider()
     st.header("Settings")
-    api_key = st.text_input("OpenRouter API Key", type="password",
-                            help="Get your key at openrouter.ai/keys")
-    llm_model = st.selectbox("LLM Model", [
-        "anthropic/claude-sonnet-4",
-        "anthropic/claude-haiku-4",
-        "google/gemini-2.5-flash",
-        "openai/gpt-4o-mini",
-    ])
+    api_key = st.secrets.get("OPENROUTER_API_KEY", "")
+    if not api_key:
+        st.warning("Set OPENROUTER_API_KEY in secrets.")
+    llm_model = st.text_input("LLM Model", value="minimax/minimax-m3")
 
     # ── Admin: User Management ───────────────────────────────────────────────
     if auth.is_admin():
@@ -490,7 +486,7 @@ with tab_constraints:
                                  disabled=not constraint_text or not api_key)
     with col2:
         if not api_key:
-            st.caption("Enter your OpenRouter API key in the sidebar")
+            st.caption("Set OPENROUTER_API_KEY in your Streamlit secrets")
 
     # Generate constraint code
     if generate_btn and constraint_text and api_key:

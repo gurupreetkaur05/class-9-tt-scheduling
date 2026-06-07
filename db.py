@@ -42,7 +42,7 @@ def init_db():
     # Seed admin user if not exists
     existing = conn.execute("SELECT id FROM users WHERE username = 'admin'").fetchone()
     if not existing:
-        admin_password = st.secrets.get("admin_password", "admin@123")
+        admin_password = st.secrets.get("ADMIN_PASSWORD", "admin@123")
         salt = secrets.token_hex(16)
         pw_hash = hashlib.sha256((salt + admin_password).encode()).hexdigest()
         conn.execute(
